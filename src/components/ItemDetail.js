@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { number, string, shape } from 'prop-types';
 import './styles/ItemDetail.css';
 
 class ItemDetail extends Component {
@@ -8,6 +9,7 @@ class ItemDetail extends Component {
 
     this.state = { id, name, reason, cleanliness };
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,14 +22,24 @@ class ItemDetail extends Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  handleOnSubmit(event) {
+    event.preventDefault();
+  }
+
   render() {
-    const { name, reason } = this.state;
+    const { name, reason, cleanliness } = this.state;
 
     return (
       <section className="item-detail">
-        <form className="item-form">
+        <form onSubmit={this.handleOnSubmit} className="item-form">
           <input onChange={this.handleOnChange} id="name" type="text" value={name} />
           <input onChange={this.handleOnChange} id="reason" type="text" value={reason} />
+          <select id="cleanliness" onChange={this.handleOnChange} value={cleanliness}>
+            <option value="Sparkling">Sparkling</option>
+            <option value="Dusty">Dusty</option>
+            <option value="Rancid">Rancid</option>
+          </select>
+          <button type="submit">submit</button>
         </form>
       </section>
     );
