@@ -42,7 +42,7 @@ describe('API Items Routes', () => {
   });
 
   describe('POST /api/v1/items/', () => {
-    it('should be able to post a new item', (done) => {
+    it('should be able to create a new item', (done) => {
       chai.request(server)
         .post('/api/v1/items')
         .send({ name: 'Nintendo', reason: 'Nostalgia', cleanliness: 'Sparkling' })
@@ -71,7 +71,7 @@ describe('API Items Routes', () => {
         });
     });
 
-    it('should not be able to post a new item if missing params in body', (done) => {
+    it('should not be able to create a new item if missing params in body', (done) => {
       chai.request(server)
         .post('/api/v1/items')
         .end((err, res) => {
@@ -82,22 +82,33 @@ describe('API Items Routes', () => {
     });
   });
 
-  describe('POST /api/v1/items/', () => {
-    it('should be able to post a new item', (done) => {
-      expect(true).to.equal(true);
-      done();
-    });
-
-    it('should not be able to post a new item if missing params in body 422', (done) => {
-      expect(true).to.equal(true);
-      done();
-    });
-  });
-
   describe('PATCH /api/v1/items/:id', () => {
     it('should be able to update an existing item', (done) => {
-      expect(true).to.equal(true);
-      done();
+      chai.request(server)
+        .get('/api/v1/items/')
+        .end((err, res) => {
+          const id = res.body[0].id;
+          chai.request(server)
+            .patch(`/api/v1/items/${id}`)
+            .send({ name: 'Nintendo 64', cleanliness: 'Sparkling' })
+            .end((error, response) => {
+              response.should.have.status(200)
+              response.body[0].should.have.property('name');
+              response.body[0].name.should.equal('Nintendo 64');
+              response.body[0].should.have.property('reason');
+              response.body[0].reason.should.equal('Nostalgia');
+              response.body[0].should.have.property('cleanliness');
+              response.body[0].cleanliness.should.equal('Sparkling');
+              chai.request(server)
+                .get('/api/v1/items')
+                .end((e, r) => {
+                  r.body[0].name.should.equal('Nintendo 64');
+                  r.body[0].reason.should.equal('Nostalgia');
+                  r.body[0].cleanliness.should.equal('Sparkling');
+                  done();
+                });
+            });
+        });
     });
 
     it('should return not found 404 if item does not exist', (done) => {
