@@ -1,11 +1,13 @@
 import React from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 import Item from './Item';
 import { getKey } from '../helpers';
 import './styles/ItemsList.css';
 
-const ItemsList = ({ items }) => {
-  const itemsList = items.map(item => <Item key={getKey()} item={item} />);
+const ItemsList = ({ items, selectItem }) => {
+  const itemsList = items.map(item => (
+    <Item key={getKey()} item={item} handleOnClick={selectItem} />
+  ));
 
   return (
     <section className="items-list-wrapper">
@@ -30,10 +32,12 @@ const ItemsList = ({ items }) => {
 
 ItemsList.defaultProps = {
   items: [],
+  selectItem: func,
 };
 
 ItemsList.propTypes = {
   items: arrayOf(object),
+  selectItem: func,
 };
 
 export default ItemsList;
