@@ -1,7 +1,10 @@
 const express = require('express');
+const items = require('./controllers/itemsController');
 
 const router = express.Router();
 
-// router.post('/auth/request_token', auth.getToken);
+router.get('/items', items.index);
+router.post('/items', items.create);
+router.patch('/items/:id', items.update);
 
 module.exports = router;
