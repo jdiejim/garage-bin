@@ -18,6 +18,7 @@ class App extends Component {
     this.fetchItems = this.fetchItems.bind(this);
     this.selectItem = this.selectItem.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.updateItems = this.updateItems.bind(this);
     this.toggleItemForm = this.toggleItemForm.bind(this);
   }
 
@@ -34,6 +35,15 @@ class App extends Component {
     this.setState({ items: updateArray(items, item), item });
   }
 
+  updateItems(item) {
+    const { items } = this.state;
+    console.log(item);
+    
+    items.push(item);
+
+    this.setState({ items });
+  }
+
   selectItem(item) {
     this.setState({ item, showItemForm: false });
   }
@@ -46,7 +56,7 @@ class App extends Component {
     const { items, item, showItemForm } = this.state;
     const itemDetailComponent = <ItemDetail item={item} updateState={this.updateState} />;
     const itemDetail = item.id && !showItemForm ? itemDetailComponent : null;
-    const itemForm = showItemForm ? <ItemForm /> : null;
+    const itemForm = showItemForm ? <ItemForm updateItems={this.updateItems} /> : null;
 
     return (
       <section className="App">

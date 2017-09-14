@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { number, string, shape, func } from 'prop-types';
+import { func } from 'prop-types';
 import './styles/ItemForm.css';
 
 class ItemForm extends Component {
   constructor() {
     super();
     this.state = {
-      id: '',
+      error: false,
       name: '',
       reason: '',
-      cleanliness: '',
+      cleanliness: 'Sparkling',
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.patchItem = this.patchItem.bind(this);
+    this.createItem = this.createItem.bind(this);
   }
 
   handleOnChange(event) {
@@ -22,21 +22,25 @@ class ItemForm extends Component {
   }
 
   handleOnSubmit(event) {
-    const { updateState } = this.props;
     event.preventDefault();
 
-    this.patchItem();
-    updateState(this.state, this.patchItem);
+    this.createItem();
   }
 
-  patchItem() {
-    const { id } = this.state;
+  createItem() {
+    const { name, reason, cleanliness } = this.state;
+    const { updateItems } = this.props;
 
-    fetch(`api/v1/items/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(this.state),
+    fetch('api/v1/items', {
+      method: 'POST',
+      body: JSON.stringify({ name, reason, cleanliness }),
       headers: { 'Content-Type': 'application/json' },
-    });
+    })
+      .then(res => res.json())
+      .then(data => updateItems(data))
+      .catch(() => this.setState({ error: true }));
+
+    this.setState({ name: '', reason: '', cleanliness: 'Sparkling' });
   }
 
   render() {
@@ -59,21 +63,12 @@ class ItemForm extends Component {
   }
 }
 
-const itemShape = shape({
-  id: number,
-  name: string,
-  reason: string,
-  cleanliness: string,
-});
-
 ItemForm.defaultProps = {
-  item: {},
-  updateState: func,
+  updateItems: func,
 };
 
 ItemForm.propTypes = {
-  item: itemShape,
-  updateState: func,
+  updateItems: func,
 };
 
 export default ItemForm;
