@@ -37,21 +37,13 @@ class App extends Component {
 
   render() {
     const { items, item } = this.state;
-
-    if (!item.id) {
-      return (
-        <section className="App">
-          <button onClick={this.fetchItems}>open</button>
-          <ItemsList items={items} selectItem={this.selectItem} />
-        </section>
-      );
-    }
+    const itemDetail = !item.id ? null : <ItemDetail item={item} updateState={this.updateState} />;
 
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
         <ItemsList items={items} selectItem={this.selectItem} />
-        <ItemDetail item={item} updateState={this.updateState} />
+        {itemDetail}
       </section>
     );
   }
