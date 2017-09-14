@@ -6,7 +6,9 @@
 
 .App {
   position: relative;
+  display: flex;
   height: 100vh;
+  padding: 100px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
