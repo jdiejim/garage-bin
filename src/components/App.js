@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ItemsList from './ItemsList';
 import ItemDetail from './ItemDetail';
+import ItemForm from './ItemForm';
 import { updateArray } from '../helpers';
 import './styles/App.css';
 
@@ -11,11 +12,13 @@ class App extends Component {
       items: [],
       error: false,
       item: {},
+      showItemForm: false,
     };
 
     this.fetchItems = this.fetchItems.bind(this);
     this.selectItem = this.selectItem.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.toggleItemForm = this.toggleItemForm.bind(this);
   }
 
   fetchItems() {
@@ -32,18 +35,26 @@ class App extends Component {
   }
 
   selectItem(item) {
-    this.setState({ item });
+    this.setState({ item, showItemForm: false });
+  }
+
+  toggleItemForm() {
+    this.setState({ showItemForm: !this.state.showItemForm });
   }
 
   render() {
-    const { items, item } = this.state;
-    const itemDetail = !item.id ? null : <ItemDetail item={item} updateState={this.updateState} />;
+    const { items, item, showItemForm } = this.state;
+    const itemDetailComponent = <ItemDetail item={item} updateState={this.updateState} />;
+    const itemDetail = item.id && !showItemForm ? itemDetailComponent : null;
+    const itemForm = showItemForm ? <ItemForm /> : null;
 
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
+        <button onClick={this.toggleItemForm}>create</button>
         <ItemsList items={items} selectItem={this.selectItem} />
         {itemDetail}
+        {itemForm}
       </section>
     );
   }
