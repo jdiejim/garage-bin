@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ItemsList from './ItemsList';
 import './styles/App.css';
 
 class App extends Component {
@@ -20,9 +21,12 @@ class App extends Component {
   }
 
   render() {
+    const { items } = this.state;
+
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
+        <ItemsList items={items} />
       </section>
     );
   }
