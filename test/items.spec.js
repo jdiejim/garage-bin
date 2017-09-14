@@ -9,18 +9,28 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('API Items Routes', () => {
-  before((done) => {
-    db.migrate.latest()
-      .then(() => done());
-  });
+  // before((done) => {
+  //   db.migrate.latest()
+  //     .then(() => done());
+  // });
 
-  beforeEach((done) => {
-    db.seed.run()
-      .then(() => done());
-  });
+  // beforeEach((done) => {
+  //   db.seed.run()
+  //     .then(() => done());
+  // });
 
   describe('GET /api/v1/items/', () => {
     it('should be able to get all the items', (done) => {
+      expect(true).to.equal(true);
+    });
+  });
+
+  describe('POST /api/v1/items/', () => {
+    it('should be able to post a new item', (done) => {
+      expect(true).to.equal(true);
+    });
+
+    it('should not be able to post a new item if missing params in body', (done) => {
       expect(true).to.equal(true);
     });
   });
