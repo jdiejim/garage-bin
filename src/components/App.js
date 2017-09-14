@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ItemsList from './ItemsList';
+import ItemDetail from './ItemDetail';
 import './styles/App.css';
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
     this.state = {
       items: [],
       error: false,
+      item: {},
     };
 
     this.fetchItems = this.fetchItems.bind(this);
@@ -21,12 +23,13 @@ class App extends Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, item } = this.state;
 
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
         <ItemsList items={items} />
+        <ItemDetail item={item} />
       </section>
     );
   }
