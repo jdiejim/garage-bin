@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { app: server, db } = require('../server');
+const server = require('../server');
+const db = require('../database');
 
 const expect = chai.expect;
 chai.should();
