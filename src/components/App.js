@@ -13,6 +13,8 @@ class App extends Component {
       error: false,
       item: {},
       showItemForm: false,
+      filter: 'All',
+      alpha: false,
     };
 
     this.fetchItems = this.fetchItems.bind(this);
@@ -20,6 +22,8 @@ class App extends Component {
     this.updateState = this.updateState.bind(this);
     this.updateItems = this.updateItems.bind(this);
     this.toggleItemForm = this.toggleItemForm.bind(this);
+    this.toggleAlphaSort = this.toggleAlphaSort.bind(this);
+    this.changeFilter = this.changeFilter.bind(this);
   }
 
   fetchItems() {
@@ -37,8 +41,7 @@ class App extends Component {
 
   updateItems(item) {
     const { items } = this.state;
-    console.log(item);
-    
+
     items.push(item);
 
     this.setState({ items });
@@ -52,8 +55,16 @@ class App extends Component {
     this.setState({ showItemForm: !this.state.showItemForm });
   }
 
+  toggleAlphaSort() {
+    this.setState({ alpha: !this.state.alpha });
+  }
+
+  changeFilter(filter) {
+    this.setState({ filter });
+  }
+
   render() {
-    const { items, item, showItemForm } = this.state;
+    const { items, item, showItemForm, filter, alpha } = this.state;
     const itemDetailComponent = <ItemDetail item={item} updateState={this.updateState} />;
     const itemDetail = item.id && !showItemForm ? itemDetailComponent : null;
     const itemForm = showItemForm ? <ItemForm updateItems={this.updateItems} /> : null;
@@ -61,8 +72,15 @@ class App extends Component {
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
-        <button onClick={this.toggleItemForm}>create</button>
-        <ItemsList items={items} selectItem={this.selectItem} />
+        <ItemsList
+          items={items}
+          filter={filter}
+          selectItem={this.selectItem}
+          changeFilter={this.changeFilter}
+          toggleAlphaSort={this.toggleAlphaSort}
+          toggleItemForm={this.toggleItemForm}
+          alpha={alpha}
+        />
         {itemDetail}
         {itemForm}
       </section>
