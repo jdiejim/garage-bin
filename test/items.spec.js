@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
@@ -10,12 +11,14 @@ chai.use(chaiHttp);
 describe('API Items Routes', () => {
   before((done) => {
     db.migrate.latest()
-      .then(() => done());
+      .then(() => done())
+      .catch(err => console.log(err));
   });
 
   beforeEach((done) => {
     db.seed.run()
-      .then(() => done());
+      .then(() => done())
+      .catch(err => console.log(err));
   });
 
   describe('GET /api/v1/items/', () => {
@@ -40,8 +43,32 @@ describe('API Items Routes', () => {
 
   describe('POST /api/v1/items/', () => {
     it('should be able to post a new item', (done) => {
-      expect(true).to.equal(true);
-      done();
+      chai.request(server)
+        .post('/api/v1/items/')
+        .send({ name: 'Nintendo', reason: 'Nostalgia', cleanliness: 'Sparkling' })
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Nintendo');
+          res.body.should.have.property('reason');
+          res.body.reason.should.equal('Nostalgia');
+          res.body.should.have.property('cleanliness');
+          res.body.cleanliness.should.equal('Sparkling');
+          chai.request(server)
+            .get('/api/v1/items/')
+            .end((error, response) => {
+              const last = response.body.length - 1;
+              response.body[last].should.have.property('name');
+              response.body[last].name.should.equal('Nintendo');
+              response.body[last].should.have.property('reason');
+              response.body[last].reason.should.equal('Nostalgia');
+              response.body[last].should.have.property('cleanliness');
+              response.body[last].cleanliness.should.equal('Sparkling');
+              done();
+            });
+        });
     });
 
     it('should not be able to post a new item if missing params in body', (done) => {
