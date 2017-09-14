@@ -19,6 +19,7 @@ exports.index = (req, res) => {
 
 exports.create = (req, res) => {
   const error = handleMissingParams(req.body, ['name', 'reason', 'cleanliness']);
+
   if (error !== '') {
     return res.status(422).json({ error });
   }

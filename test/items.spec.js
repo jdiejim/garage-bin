@@ -24,7 +24,7 @@ describe('API Items Routes', () => {
   describe('GET /api/v1/items/', () => {
     it('should be able to get all the items', (done) => {
       chai.request(server)
-        .get('/api/v1/items/')
+        .get('/api/v1/items')
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
@@ -44,7 +44,7 @@ describe('API Items Routes', () => {
   describe('POST /api/v1/items/', () => {
     it('should be able to post a new item', (done) => {
       chai.request(server)
-        .post('/api/v1/items/')
+        .post('/api/v1/items')
         .send({ name: 'Nintendo', reason: 'Nostalgia', cleanliness: 'Sparkling' })
         .end((err, res) => {
           res.should.have.status(201);
@@ -72,8 +72,13 @@ describe('API Items Routes', () => {
     });
 
     it('should not be able to post a new item if missing params in body', (done) => {
-      expect(true).to.equal(true);
-      done();
+      chai.request(server)
+        .post('/api/v1/items')
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.error.should.equal('Missing parameters: name, reason, cleanliness');
+          done();
+        });
     });
   });
 
