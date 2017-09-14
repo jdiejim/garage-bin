@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import { number, string, shape, func } from 'prop-types';
-import './styles/ItemDetail.css';
+import { func } from 'prop-types';
+import './styles/ItemForm.css';
 
-class ItemDetail extends Component {
-  constructor(props) {
-    super(props);
-    const { id, name, reason, cleanliness } = props.item;
+class ItemForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      error: false,
+      name: '',
+      reason: '',
+      cleanliness: 'Sparkling',
+    };
 
-    this.state = { id, name, reason, cleanliness, error: false };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.patchItem = this.patchItem.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { id, name, reason, cleanliness } = nextProps.item;
-
-    this.setState({ id, name, reason, cleanliness });
+    this.createItem = this.createItem.bind(this);
   }
 
   handleOnChange(event) {
@@ -26,28 +24,30 @@ class ItemDetail extends Component {
   handleOnSubmit(event) {
     event.preventDefault();
 
-    this.patchItem();
+    this.createItem();
   }
 
-  patchItem() {
-    const { updateState } = this.props;
-    const { id, name, reason, cleanliness } = this.state;
+  createItem() {
+    const { name, reason, cleanliness } = this.state;
+    const { updateItems } = this.props;
 
-    fetch(`api/v1/items/${id}`, {
-      method: 'PATCH',
+    fetch('api/v1/items', {
+      method: 'POST',
       body: JSON.stringify({ name, reason, cleanliness }),
       headers: { 'Content-Type': 'application/json' },
     })
       .then(res => res.json())
-      .then(data => updateState(data))
+      .then(data => updateItems(data))
       .catch(() => this.setState({ error: true }));
+
+    this.setState({ name: '', reason: '', cleanliness: 'Sparkling' });
   }
 
   render() {
     const { name, reason, cleanliness } = this.state;
 
     return (
-      <section className="item-detail">
+      <section className="item-form">
         <form onSubmit={this.handleOnSubmit} className="item-form">
           <input onChange={this.handleOnChange} id="name" type="text" value={name} />
           <input onChange={this.handleOnChange} id="reason" type="text" value={reason} />
@@ -63,21 +63,12 @@ class ItemDetail extends Component {
   }
 }
 
-const itemShape = shape({
-  id: number,
-  name: string,
-  reason: string,
-  cleanliness: string,
-});
-
-ItemDetail.defaultProps = {
-  item: {},
-  updateState: func,
+ItemForm.defaultProps = {
+  updateItems: func,
 };
 
-ItemDetail.propTypes = {
-  item: itemShape,
-  updateState: func,
+ItemForm.propTypes = {
+  updateItems: func,
 };
 
-export default ItemDetail;
+export default ItemForm;
