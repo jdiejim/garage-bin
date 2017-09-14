@@ -99,6 +99,7 @@ class App extends Component {
         </div>
         <ItemsList
           items={items}
+          selected={item}
           filter={filter}
           selectItem={this.selectItem}
           changeFilter={this.changeFilter}

@@ -5,7 +5,15 @@ import { getKey, getCounters } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = (props) => {
-  const { items, selectItem, changeFilter, filter, toggleAlphaSort, alpha, toggleItemForm } = props;
+  const {
+    items,
+    selectItem,
+    changeFilter,
+    filter,
+    toggleAlphaSort,
+    alpha,
+    toggleItemForm,
+    selected } = props;
 
   if (!items.length) {
     return null;
@@ -25,17 +33,17 @@ const ItemsList = (props) => {
   }
 
   itemsList = itemsList.map(item => (
-    <Item key={getKey()} item={item} handleOnClick={selectItem} />
+    <Item key={getKey()} item={item} handleOnClick={selectItem} selectedId={selected.id} />
   ));
 
   return (
     <section className="items-list-wrapper">
       <header className="items-header">
         <section className="counters">
-          <p>total: {items.length}</p>
-          <p>Sparkling: {sparkling}</p>
-          <p>Dusty: {dusty}</p>
-          <p>Rancid: {rancid}</p>
+          <p className="counter-text">total: <span>{items.length}</span></p>
+          <p className="counter-text">Sparkling: <span>{sparkling}</span></p>
+          <p className="counter-text">Dusty: <span>{dusty}</span></p>
+          <p className="counter-text">Rancid: <span>{rancid}</span></p>
         </section>
         <section className="navigation">
           <nav>
