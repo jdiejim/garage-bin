@@ -1,7 +1,7 @@
 import React from 'react';
 import { arrayOf, object, func, string, bool } from 'prop-types';
 import Item from './Item';
-import { getKey } from '../helpers';
+import { getKey, getCounters } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = (props) => {
@@ -11,11 +11,13 @@ const ItemsList = (props) => {
     return null;
   }
 
+  const { sparkling, dusty, rancid } = getCounters(items);
+
   const sortTitle = alpha ? 'Normal' : 'Alpha';
   let itemsList = [...items];
 
   if (alpha) {
-    itemsList = itemsList.sort((a, b) => a.name.toLowerCase()[0] > b.name.toLowerCase()[0]);
+    itemsList.sort((a, b) => a.name.toLowerCase()[0] > b.name.toLowerCase()[0]);
   }
 
   if (filter !== 'All') {
@@ -29,6 +31,12 @@ const ItemsList = (props) => {
   return (
     <section className="items-list-wrapper">
       <header className="items-header">
+        <section className="counters">
+          <p>total: {items.length}</p>
+          <p>Sparkling: {sparkling}</p>
+          <p>Dusty: {dusty}</p>
+          <p>Rancid: {rancid}</p>
+        </section>
         <nav>
           <button onClick={() => changeFilter('All')}>All</button>
           <button onClick={() => changeFilter('Sparkling')}>Sparkling</button>

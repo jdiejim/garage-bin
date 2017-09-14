@@ -5,3 +5,15 @@ export const updateArray = (array, item) => array.map((element) => {
   }
   return element;
 });
+
+export const getCounters = array => array.reduce((obj, element) => {
+  const counters = obj;
+  const type = element.cleanliness.toLowerCase();
+
+  if (!counters[type]) {
+    counters[type] = 0;
+  }
+
+  counters[type] += 1;
+  return counters;
+}, {});
