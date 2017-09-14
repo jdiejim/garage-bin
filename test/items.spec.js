@@ -112,13 +112,14 @@ describe('API Items Routes', () => {
     });
 
     it('should return not found 404 if item does not exist', (done) => {
-      expect(true).to.equal(true);
-      done();
-    });
-
-    it('should return error 400 if params in body are incorrect', (done) => {
-      expect(true).to.equal(true);
-      done();
+      chai.request(server)
+        .patch('/api/v1/items/0')
+        .send({ name: 'Nintendo 64', cleanliness: 'Sparkling' })
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.error.should.equal('Item not found');
+          done();
+        });
     });
   });
 });
