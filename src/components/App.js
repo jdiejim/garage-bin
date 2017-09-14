@@ -13,6 +13,7 @@ class App extends Component {
     };
 
     this.fetchItems = this.fetchItems.bind(this);
+    this.selectItem = this.selectItem.bind(this);
   }
 
   fetchItems() {
@@ -22,13 +23,17 @@ class App extends Component {
       .catch(() => this.setState({ error: true }));
   }
 
+  selectItem(item) {
+    this.setState({ item });
+  }
+
   render() {
     const { items, item } = this.state;
 
     return (
       <section className="App">
         <button onClick={this.fetchItems}>open</button>
-        <ItemsList items={items} />
+        <ItemsList items={items} selectItem={this.selectItem} />
         <ItemDetail item={item} />
       </section>
     );
