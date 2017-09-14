@@ -4,7 +4,6 @@ const chaiHttp = require('chai-http');
 const server = require('../server');
 const db = require('../database');
 
-const expect = chai.expect;
 chai.should();
 chai.use(chaiHttp);
 
@@ -92,13 +91,13 @@ describe('API Items Routes', () => {
             .patch(`/api/v1/items/${id}`)
             .send({ name: 'Nintendo 64', cleanliness: 'Sparkling' })
             .end((error, response) => {
-              response.should.have.status(200)
-              response.body[0].should.have.property('name');
-              response.body[0].name.should.equal('Nintendo 64');
-              response.body[0].should.have.property('reason');
-              response.body[0].reason.should.equal('Nostalgia');
-              response.body[0].should.have.property('cleanliness');
-              response.body[0].cleanliness.should.equal('Sparkling');
+              response.should.have.status(200);
+              response.body.should.have.property('name');
+              response.body.name.should.equal('Nintendo 64');
+              response.body.should.have.property('reason');
+              response.body.reason.should.equal('Nostalgia');
+              response.body.should.have.property('cleanliness');
+              response.body.cleanliness.should.equal('Sparkling');
               chai.request(server)
                 .get('/api/v1/items')
                 .end((e, r) => {
