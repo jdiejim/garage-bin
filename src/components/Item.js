@@ -1,5 +1,5 @@
 import React from 'react';
-import { objectOf, string } from 'prop-types';
+import { shape, string, number } from 'prop-types';
 import './styles/Item.css';
 
 const Item = ({ item }) => {
@@ -13,13 +13,19 @@ const Item = ({ item }) => {
   );
 };
 
+const itemShape = shape({
+  id: number,
+  name: string,
+  reason: string,
+  cleanliness: string,
+});
 
 Item.defaultProps = {
   item: {},
 };
 
 Item.propTypes = {
-  item: objectOf(string),
+  item: itemShape,
 };
 
 export default Item;
