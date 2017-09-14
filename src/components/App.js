@@ -17,10 +17,12 @@ class App extends Component {
   }
 
   fetchItems() {
-    fetch('api/v1/items')
-      .then(res => res.json())
-      .then(items => this.setState({ items }))
-      .catch(() => this.setState({ error: true }));
+    if (!this.state.items.length) {
+      fetch('api/v1/items')
+        .then(res => res.json())
+        .then(items => this.setState({ items }))
+        .catch(() => this.setState({ error: true }));
+    }
   }
 
   selectItem(item) {
@@ -29,6 +31,15 @@ class App extends Component {
 
   render() {
     const { items, item } = this.state;
+
+    if (!item.id) {
+      return (
+        <section className="App">
+          <button onClick={this.fetchItems}>open</button>
+          <ItemsList items={items} selectItem={this.selectItem} />
+        </section>
+      );
+    }
 
     return (
       <section className="App">

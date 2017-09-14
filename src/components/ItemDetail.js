@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import './ItemDetail.css';
+import './styles/ItemDetail.css';
 
 class ItemDetail extends Component {
-  constructor() {
-    super();
-    this.state = {
-      id: '',
-      name: '',
-      reason: '',
-      cleanliness: '',
-    };
+  constructor(props) {
+    super(props);
+    const { id, name, reason, cleanliness } = props.item;
+
+    this.state = { id, name, reason, cleanliness };
+    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  componentDidMount() {
-    const { id, name, reason, cleanliness } = this.props.item;
+  componentWillReceiveProps(nextProps) {
+    const { id, name, reason, cleanliness } = nextProps.item;
 
     this.setState({ id, name, reason, cleanliness });
+  }
+
+  handleOnChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
   }
 
   render() {
@@ -24,13 +26,8 @@ class ItemDetail extends Component {
     return (
       <section className="item-detail">
         <form className="item-form">
-          <input id="name" type="text" value={name} />
-          <input id="reason" type="text" value={reason} />
-          <select>
-            <option selected={cleanliness === 'Sparkling'} value="Sparkling">Sparkling</option>
-            <option selected={cleanliness === 'Dusty'} value="Dusty">Dusty</option>
-            <option selected={cleanliness === 'Rancid'} value="Rancid">Rancid</option>
-          </select>
+          <input onChange={this.handleOnChange} id="name" type="text" value={name} />
+          <input onChange={this.handleOnChange} id="reason" type="text" value={reason} />
         </form>
       </section>
     );
