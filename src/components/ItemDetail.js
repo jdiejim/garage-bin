@@ -7,7 +7,7 @@ class ItemDetail extends Component {
     super(props);
     const { id, name, reason, cleanliness } = props.item;
 
-    this.state = { id, name, reason, cleanliness };
+    this.state = { id, name, reason, cleanliness, error: false };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.patchItem = this.patchItem.bind(this);
@@ -24,21 +24,23 @@ class ItemDetail extends Component {
   }
 
   handleOnSubmit(event) {
-    const { updateState } = this.props;
     event.preventDefault();
 
     this.patchItem();
-    updateState(this.state);
   }
 
   patchItem() {
-    const { id } = this.state;
+    const { updateState } = this.props;
+    const { id, name, reason, cleanliness } = this.state;
 
     fetch(`api/v1/items/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({ name, reason, cleanliness }),
       headers: { 'Content-Type': 'application/json' },
-    });
+    })
+      .then(res => res.json())
+      .then(data => updateState(data))
+      .catch(() => this.setState({ error: true }));
   }
 
   render() {
