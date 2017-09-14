@@ -1,9 +1,10 @@
 import React from 'react';
 import Item from './Item';
+import { getKey } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = ({ items }) => {
-  const itemsList = items.map(item => <Item key={Date.now()} item={item} />);
+  const itemsList = items.map(item => <Item key={getKey()} item={item} />);
 
   return (
     <section className="items-list-wrapper">
