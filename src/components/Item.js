@@ -1,4 +1,5 @@
 import React from 'react';
+import { objectOf, string } from 'prop-types';
 import './styles/Item.css';
 
 const Item = ({ item }) => {
@@ -10,6 +11,15 @@ const Item = ({ item }) => {
       <p>{cleanliness}</p>
     </button>
   );
+};
+
+
+Item.defaultProps = {
+  item: {},
+};
+
+Item.propTypes = {
+  item: objectOf(string),
 };
 
 export default Item;
