@@ -1,0 +1,44 @@
+@keyframes appear {
+  from { transform: translateY(400%) }
+  to { transform: translateY(0%) }
+}
+
+.items-list-wrapper {
+  position: relative;
+  z-index: 0;
+  width: 45%;
+  height: 100%;
+  overflow: hidden;
+  /* transform: translateY(200%); */
+  transition: all 0.2s;
+}
+
+.open .items-list-wrapper {
+  animation: appear 1s;
+  transform: translateY(0%);
+  /* transition-delay: 1s; */
+}
+
+.items-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: red;
+}
+
+.counters {
+  display: flex;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+  overflow: scroll;
+}

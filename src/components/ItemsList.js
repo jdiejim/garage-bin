@@ -37,16 +37,18 @@ const ItemsList = (props) => {
           <p>Dusty: {dusty}</p>
           <p>Rancid: {rancid}</p>
         </section>
-        <nav>
-          <button onClick={() => changeFilter('All')}>All</button>
-          <button onClick={() => changeFilter('Sparkling')}>Sparkling</button>
-          <button onClick={() => changeFilter('Dusty')}>Dusty</button>
-          <button onClick={() => changeFilter('Rancid')}>Rancid</button>
-        </nav>
-        <nav>
-          <button onClick={toggleAlphaSort}>{sortTitle}</button>
-          <button onClick={toggleItemForm}>Create</button>
-        </nav>
+        <section className="navigation">
+          <nav>
+            <button onClick={() => changeFilter('All')}>All</button>
+            <button onClick={() => changeFilter('Sparkling')}>Sparkling</button>
+            <button onClick={() => changeFilter('Dusty')}>Dusty</button>
+            <button onClick={() => changeFilter('Rancid')}>Rancid</button>
+          </nav>
+          <nav>
+            <button onClick={toggleAlphaSort}>{sortTitle}</button>
+            <button onClick={toggleItemForm}>Create</button>
+          </nav>
+        </section>
       </header>
       <section className="items-list">
         {itemsList}
