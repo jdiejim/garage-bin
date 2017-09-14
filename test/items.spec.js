@@ -21,8 +21,21 @@ describe('API Items Routes', () => {
 
   describe('GET /api/v1/items/', () => {
     it('should be able to get all the items', (done) => {
-      expect(true).to.equal(true);
-      done();
+      chai.request(server)
+        .get('/api/v1/items/')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(3);
+          res.body[0].should.have.property('name');
+          res.body[0].name.should.equal('Super Nintendo');
+          res.body[0].should.have.property('reason');
+          res.body[0].reason.should.equal('Nostalgia');
+          res.body[0].should.have.property('cleanliness');
+          res.body[0].cleanliness.should.equal('Dusty');
+          done();
+        });
     });
   });
 
