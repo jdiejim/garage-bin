@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { number, string, shape } from 'prop-types';
+import { number, string, shape, func } from 'prop-types';
 import './styles/ItemDetail.css';
 
 class ItemDetail extends Component {
@@ -10,6 +10,7 @@ class ItemDetail extends Component {
     this.state = { id, name, reason, cleanliness };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.patchItem = this.patchItem.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,7 +24,21 @@ class ItemDetail extends Component {
   }
 
   handleOnSubmit(event) {
+    const { updateState } = this.props;
     event.preventDefault();
+
+    this.patchItem();
+    updateState(this.state);
+  }
+
+  patchItem() {
+    const { id } = this.state;
+
+    fetch(`api/v1/items/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(this.state),
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   render() {
@@ -55,10 +70,12 @@ const itemShape = shape({
 
 ItemDetail.defaultProps = {
   item: {},
+  updateState: func,
 };
 
 ItemDetail.propTypes = {
   item: itemShape,
+  updateState: func,
 };
 
 export default ItemDetail;
