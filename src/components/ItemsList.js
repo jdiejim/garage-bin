@@ -1,9 +1,11 @@
 import React from 'react';
+import { arrayOf, object } from 'prop-types';
 import Item from './Item';
+import { getKey } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = ({ items }) => {
-  const itemsList = items.map(item => <Item key={Date.now()} item={item} />);
+  const itemsList = items.map(item => <Item key={getKey()} item={item} />);
 
   return (
     <section className="items-list-wrapper">
@@ -24,6 +26,14 @@ const ItemsList = ({ items }) => {
       </section>
     </section>
   );
+};
+
+ItemsList.defaultProps = {
+  items: [],
+};
+
+ItemsList.propTypes = {
+  items: arrayOf(object),
 };
 
 export default ItemsList;
