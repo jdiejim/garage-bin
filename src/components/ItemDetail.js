@@ -21,7 +21,7 @@ class ItemDetail extends Component {
   }
 
   render() {
-    const { name, reason, cleanliness } = this.state;
+    const { name, reason } = this.state;
 
     return (
       <section className="item-detail">
@@ -33,5 +33,20 @@ class ItemDetail extends Component {
     );
   }
 }
+
+const itemShape = shape({
+  id: number,
+  name: string,
+  reason: string,
+  cleanliness: string,
+});
+
+ItemDetail.defaultProps = {
+  item: {},
+};
+
+ItemDetail.propTypes = {
+  item: itemShape,
+};
 
 export default ItemDetail;
