@@ -1,7 +1,7 @@
 import React from 'react';
 import { arrayOf, object, func, string, bool } from 'prop-types';
 import Item from './Item';
-import { getKey, getCounters } from '../helpers';
+import { getKey, getCounters, getBgColor } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = (props) => {
@@ -14,6 +14,12 @@ const ItemsList = (props) => {
     alpha,
     toggleItemForm,
     selected } = props;
+
+  const colors = {
+    Sparkling: '#4DD8C5',
+    Dusty: '#F9F037',
+    Rancid: '#FB6755',
+  };
 
   if (!items.length) {
     return null;
@@ -33,7 +39,13 @@ const ItemsList = (props) => {
   }
 
   itemsList = itemsList.map(item => (
-    <Item key={getKey()} item={item} handleOnClick={selectItem} selectedId={selected.id} />
+    <Item
+      key={getKey()}
+      item={item}
+      handleOnClick={selectItem}
+      selectedId={selected.id}
+      colors={colors}
+    />
   ));
 
   return (
@@ -47,14 +59,14 @@ const ItemsList = (props) => {
         </section>
         <section className="navigation">
           <nav>
-            <button onClick={() => changeFilter('All')}>All</button>
-            <button onClick={() => changeFilter('Sparkling')}>Sparkling</button>
-            <button onClick={() => changeFilter('Dusty')}>Dusty</button>
-            <button onClick={() => changeFilter('Rancid')}>Rancid</button>
+            <button className="filter" onClick={() => changeFilter('All')}>All</button>
+            <button style={getBgColor(colors.Sparkling)} className="filter" onClick={() => changeFilter('Sparkling')}>Sparkling</button>
+            <button style={getBgColor(colors.Dusty)} className="filter" onClick={() => changeFilter('Dusty')}>Dusty</button>
+            <button style={getBgColor(colors.Rancid)} className="filter" onClick={() => changeFilter('Rancid')}>Rancid</button>
+            <button className="sort" onClick={toggleAlphaSort}>{sortTitle}</button>
           </nav>
           <nav>
-            <button onClick={toggleAlphaSort}>{sortTitle}</button>
-            <button onClick={toggleItemForm}>Create</button>
+            <button className="add" onClick={toggleItemForm}>Add New</button>
           </nav>
         </section>
       </header>

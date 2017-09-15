@@ -62,3 +62,54 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.navigation {
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.filter {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #7171FF;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2), 0 14px 45px rgba(0, 0, 0, 0.2);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 16px;
+}
+
+.sort {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #ADADFF;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2), 0 14px 45px rgba(0, 0, 0, 0.2);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 14px;
+}
+
+.sort:focus {
+  outline: none;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #54F3CB;
+  border-radius: 50%;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2), 0 14px 45px rgba(0, 0, 0, 0.2);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 15px;
+}
+
+.add:focus {
+  outline: none;
+}

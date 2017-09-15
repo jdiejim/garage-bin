@@ -2,13 +2,8 @@ import React from 'react';
 import { shape, string, number, func } from 'prop-types';
 import './styles/Item.css';
 
-const Item = ({ item, handleOnClick, selectedId }) => {
+const Item = ({ item, handleOnClick, selectedId, colors }) => {
   const { id, name, cleanliness } = item;
-  const colors = {
-    Sparkling: '#4DD8C5',
-    Dusty: '#F9F037',
-    Rancid: '#FB6755',
-  };
 
   const bgColor = { backgroundColor: colors[cleanliness] };
   const itemClass = selectedId === id ? 'item item-active' : 'item';
