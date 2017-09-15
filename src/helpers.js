@@ -17,3 +17,7 @@ export const getCounters = array => array.reduce((obj, element) => {
   counters[type] += 1;
   return counters;
 }, {});
+
+export const getBgColor = (type) => {
+  return { backgroundColor: type };
+};

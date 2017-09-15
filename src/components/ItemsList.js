@@ -1,11 +1,25 @@
 import React from 'react';
 import { arrayOf, object, func, string, bool } from 'prop-types';
 import Item from './Item';
-import { getKey, getCounters } from '../helpers';
+import { getKey, getCounters, getBgColor } from '../helpers';
 import './styles/ItemsList.css';
 
 const ItemsList = (props) => {
-  const { items, selectItem, changeFilter, filter, toggleAlphaSort, alpha, toggleItemForm } = props;
+  const {
+    items,
+    selectItem,
+    changeFilter,
+    filter,
+    toggleAlphaSort,
+    alpha,
+    toggleItemForm,
+    selected } = props;
+
+  const colors = {
+    Sparkling: '#4DD8C5',
+    Dusty: '#F9F037',
+    Rancid: '#FB6755',
+  };
 
   if (!items.length) {
     return null;
@@ -25,28 +39,36 @@ const ItemsList = (props) => {
   }
 
   itemsList = itemsList.map(item => (
-    <Item key={getKey()} item={item} handleOnClick={selectItem} />
+    <Item
+      key={getKey()}
+      item={item}
+      handleOnClick={selectItem}
+      selectedId={selected.id}
+      colors={colors}
+    />
   ));
 
   return (
     <section className="items-list-wrapper">
       <header className="items-header">
         <section className="counters">
-          <p>total: {items.length}</p>
-          <p>Sparkling: {sparkling}</p>
-          <p>Dusty: {dusty}</p>
-          <p>Rancid: {rancid}</p>
+          <p className="counter-text">total: <span>{items.length}</span></p>
+          <p className="counter-text">Sparkling: <span>{sparkling}</span></p>
+          <p className="counter-text">Dusty: <span>{dusty}</span></p>
+          <p className="counter-text">Rancid: <span>{rancid}</span></p>
         </section>
-        <nav>
-          <button onClick={() => changeFilter('All')}>All</button>
-          <button onClick={() => changeFilter('Sparkling')}>Sparkling</button>
-          <button onClick={() => changeFilter('Dusty')}>Dusty</button>
-          <button onClick={() => changeFilter('Rancid')}>Rancid</button>
-        </nav>
-        <nav>
-          <button onClick={toggleAlphaSort}>{sortTitle}</button>
-          <button onClick={toggleItemForm}>Create</button>
-        </nav>
+        <section className="navigation">
+          <nav>
+            <button className="filter" onClick={() => changeFilter('All')}>All</button>
+            <button style={getBgColor(colors.Sparkling)} className="filter" onClick={() => changeFilter('Sparkling')}>Sparkling</button>
+            <button style={getBgColor(colors.Dusty)} className="filter" onClick={() => changeFilter('Dusty')}>Dusty</button>
+            <button style={getBgColor(colors.Rancid)} className="filter" onClick={() => changeFilter('Rancid')}>Rancid</button>
+            <button className="sort" onClick={toggleAlphaSort}>{sortTitle}</button>
+          </nav>
+          <nav>
+            <button className="add" onClick={toggleItemForm}>Add New</button>
+          </nav>
+        </section>
       </header>
       <section className="items-list">
         {itemsList}
