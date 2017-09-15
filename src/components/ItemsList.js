@@ -21,10 +21,6 @@ const ItemsList = (props) => {
     Rancid: '#FB6755',
   };
 
-  if (!items.length) {
-    return null;
-  }
-
   const { sparkling, dusty, rancid } = getCounters(items);
 
   const sortTitle = alpha ? 'Normal' : 'Alpha';
