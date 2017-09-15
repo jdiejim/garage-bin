@@ -47,16 +47,25 @@ class ItemForm extends Component {
     const { name, reason, cleanliness } = this.state;
 
     return (
-      <section className="item-form">
+      <section className="item-form-wrapper">
         <form onSubmit={this.handleOnSubmit} className="item-form">
-          <input onChange={this.handleOnChange} id="name" type="text" value={name} />
-          <input onChange={this.handleOnChange} id="reason" type="text" value={reason} />
-          <select id="cleanliness" onChange={this.handleOnChange} value={cleanliness}>
-            <option value="Sparkling">Sparkling</option>
-            <option value="Dusty">Dusty</option>
-            <option value="Rancid">Rancid</option>
-          </select>
-          <button type="submit">submit</button>
+          <div className="input-wrapper">
+            <h3 className="label">Name</h3>
+            <input className="item-input" onChange={this.handleOnChange} id="name" type="text" value={name} placeholder="Enter Name" />
+          </div>
+          <div className="input-wrapper">
+            <h3 className="label">Reason</h3>
+            <input className="item-input" onChange={this.handleOnChange} id="reason" type="text" value={reason} placeholder="Enter Reason" />
+          </div>
+          <div className="input-wrapper">
+            <h3 className="label">Cleanliness</h3>
+            <select id="cleanliness" onChange={this.handleOnChange} value={cleanliness}>
+              <option value="Sparkling">Sparkling</option>
+              <option value="Dusty">Dusty</option>
+              <option value="Rancid">Rancid</option>
+            </select>
+          </div>
+          <button className="btn-submit" type="submit">submit</button>
         </form>
       </section>
     );
@@ -72,3 +81,5 @@ ItemForm.propTypes = {
 };
 
 export default ItemForm;
+
+
